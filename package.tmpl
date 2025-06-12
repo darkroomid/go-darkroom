@@ -1,0 +1,16 @@
+<!DOCTYPE html><html>
+	<head>
+		<meta charset="utf-8">
+		<title>{{ .Name }}</title>
+		<meta name="go-import" content="{{ .Path }} git {{ .Repo }}">
+		<meta name="go-source" content="{{ .Path }} {{ .URL}} {{ .URL }}/tree/{{ if eq .Branch "" }}main{{else}}{{.Branch}}{{end}}{/dir} {{ .URL }}/blob/{{ if eq .Branch "" }}main{{else}}{{.Branch}}{{end}}{/dir}/{file}#L{line}">
+	</head>
+	<body>
+		<div>package: <code>{{ .Path }}</code></div>
+		<div>source: <a href="{{ .URL }}">{{ .URL }}</a></div>
+		<div>godocs:<ul>
+			<li><a href="https://pkg.go.dev/{{ .Path }}">{{ .Path }}</a></li>{{range .Packages}}
+			<li><a href="https://pkg.go.dev/{{ $.Path }}/{{ . }}">{{ $.Path }}/{{ . }}</a></li>{{end}}
+		</ul></div>
+	</body>
+</html>

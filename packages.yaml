@@ -1,0 +1,17 @@
+debug: false
+
+info:
+  page_title: Darkroom Go Module
+  page_description: Darkroom Go Module
+
+pkg:
+  domain: pkg.darkroom.id
+
+godoc:
+  domain: pkg.go.dev
+
+repos:
+- name: vanity
+  description: Vanity URL
+  enable_godoc: false
+  repo_url: github.com/darkroomid/go-darkroom
