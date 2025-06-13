@@ -24,10 +24,13 @@ type (
 
 	// PkgInfo ...
 	PkgInfo struct {
-		Name        string `yaml:"name"`
-		Description string `yaml:"description"`
-		RepoURL     string `yaml:"repo_url"`
-		EnableGodoc bool   `yaml:"enable_godoc"`
+		RootDomain    string
+		GodocURL      string
+		CanonicalURL  string
+		Name          string `yaml:"name"`
+		Description   string `yaml:"description"`
+		RepoURL       string `yaml:"repo_url"`
+		GodocDisabled bool   `yaml:"godoc_disable"`
 	}
 
 	// Info ...
@@ -77,21 +80,25 @@ func main() {
 		shutdown(err)
 	}
 
-	// for _, pkg := range packages.Repos {
-	// 	pkgDir := filepath.Join("public", pkg.Name)
-	// 	if err := os.MkdirAll(pkgDir, 0o755); err != nil {
-	// 		shutdown(err)
-	// 	}
-	// 	var page bytes.Buffer
-	// 	if err := t.Execute(&page, pkg); err != nil {
-	// 		shutdown(err)
-	// 	}
-	//
-	// 	pkgFile := filepath.Join(pkgDir, "index.html")
-	// 	if err := os.WriteFile(pkgFile, page.Bytes(), 0o755); err != nil {
-	// 		shutdown(err)
-	// 	}
-	// }
+	for _, pkg := range packages.Repos {
+		pkg.RootDomain = fmt.Sprintf("https://%s", packages.Pkg.Domain)
+		pkg.CanonicalURL = fmt.Sprintf("%s/%s", packages.Pkg.Domain, pkg.Name)
+		pkg.GodocURL = packages.Godoc.Domain
+
+		pkgDir := filepath.Join("public", pkg.Name)
+		if err := os.MkdirAll(pkgDir, 0o755); err != nil {
+			shutdown(err)
+		}
+		var page bytes.Buffer
+		if err := t.Execute(&page, pkg); err != nil {
+			shutdown(err)
+		}
+
+		pkgFile := filepath.Join(pkgDir, "index.html")
+		if err := os.WriteFile(pkgFile, page.Bytes(), 0o755); err != nil {
+			shutdown(err)
+		}
+	}
 
 	t, err = template.ParseFiles("index.tmpl")
 	if err != nil {

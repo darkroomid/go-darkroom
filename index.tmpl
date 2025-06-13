@@ -50,7 +50,7 @@
                     <td>{{ $importPath }}</td>
                     <td>{{ $r.Description }}</td>
                     <td>
-                      {{if $r.EnableGodoc}}
+                      {{if not $r.GodocDisabled}}
                       <a href="https://{{ $.Godoc.Domain }}/{{ $importPath }}">
                         <img alt="GoDoc" src="images/godoc-available-blue.svg"/>
                       </a>
@@ -64,7 +64,7 @@
             </tbody>
         </table>
         <p class="center footer">
-        Maintained by <a href="https://github.com/darkroomid/go-darkroom" target="_blank">Darkrom.id</a> {{ $.Version }}
+        Maintained by <a href="https://github.com/darkroomid/go-darkroom" target="_blank">Darkroom.id</a> {{ $.Version }}
         </p>
     </section>
     <script src="https://unpkg.com/@popperjs/core@2"></script>

@@ -13,5 +13,5 @@ godoc:
 repos:
 - name: vanity
   description: Vanity URL
-  enable_godoc: false
+  godoc_disable: true
   repo_url: github.com/darkroomid/go-darkroom
